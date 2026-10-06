@@ -230,9 +230,12 @@ export default function Login() {
                 />
                 <span>Recordarme</span>
               </label>
-              <a href="#" className="font-medium text-primary no-underline hover:underline">
+              <button
+                type="button"
+                className="font-medium text-primary no-underline hover:underline cursor-pointer bg-transparent border-0 p-0 text-[13px]"
+              >
                 ¿Olvidaste tu contraseña?
-              </a>
+              </button>
             </div>
 
             {/* Submit */}
@@ -250,13 +253,19 @@ export default function Login() {
 
           <p className="mt-8 text-center text-[13px] leading-relaxed text-ink-muted">
             Al iniciar sesión aceptas nuestros{" "}
-            <a href="#" className="font-semibold text-primary no-underline hover:underline">
+            <button
+              type="button"
+              className="font-semibold text-primary no-underline hover:underline cursor-pointer bg-transparent border-0 p-0 text-[13px]"
+            >
               Términos
-            </a>{" "}
+            </button>{" "}
             y{" "}
-            <a href="#" className="font-semibold text-primary no-underline hover:underline">
+            <button
+              type="button"
+              className="font-semibold text-primary no-underline hover:underline cursor-pointer bg-transparent border-0 p-0 text-[13px]"
+            >
               Política de privacidad
-            </a>
+            </button>
             .
           </p>
 
