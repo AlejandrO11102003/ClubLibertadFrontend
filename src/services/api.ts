@@ -126,25 +126,44 @@ export async function apiFetch<T = any>(
 export const authService = {
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
+    const payload = {
+      dni: credentials.dni,
+      password: credentials.password,
+      contrasenia: credentials.password,
+    };
     return apiFetch<LoginResponse>("/auth/login", {
       method: "POST",
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(payload),
     });
   },
 
-  
   async registrarBailarin(data: RegistroBailarinRequest): Promise<any> {
+    const payload = {
+      ...data,
+      contrasenia: data.password,
+    };
+
     try {
       return await apiFetch<any>("/auth/register", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
     } catch (err: any) {
       if (err?.status === 404) {
-        return await apiFetch<any>("/bailarines", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
+        try {
+          return await apiFetch<any>("/auth/registro-bailarin", {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+        } catch (err2: any) {
+          if (err2?.status === 404) {
+            return await apiFetch<any>("/bailarines", {
+              method: "POST",
+              body: JSON.stringify(payload),
+            });
+          }
+          throw err2;
+        }
       }
       throw err;
     }

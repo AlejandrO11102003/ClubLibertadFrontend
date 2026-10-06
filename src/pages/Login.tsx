@@ -292,6 +292,13 @@ export default function Login() {
             .
           </p>
 
+          <p className="mt-5 text-center text-[13px] text-ink-muted border-t border-[#E8E2D9] pt-4">
+            ¿Aún no tienes cuenta?{" "}
+            <Link to="/registro" className="font-semibold text-primary no-underline hover:underline">
+              Regístrate aquí como bailarín
+            </Link>
+          </p>
+
           
         </div>
       </main>
