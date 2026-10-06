@@ -260,14 +260,7 @@ export default function Login() {
             .
           </p>
 
-          {/* Hint demo */}
-          <div className="mt-5 rounded-btn border border-dashed border-line bg-cream px-3.5 py-3 text-xs leading-normal text-ink-muted">
-            <strong className="text-ink">🔑 Demo:</strong> usa{" "}
-            <code className="rounded bg-white px-1.5 py-0.5 font-mono text-[11.5px] text-primary">12345678</code> /{" "}
-            <code className="rounded bg-white px-1.5 py-0.5 font-mono text-[11.5px] text-primary">admin123</code>{" "}
-            para entrar como admin, o cualquier DNI de 8 dígitos + contraseña ≥6 para bailarín. En la Fase 3 se
-            conectará con JWT real.
-          </div>
+          
         </div>
       </main>
     </div>
