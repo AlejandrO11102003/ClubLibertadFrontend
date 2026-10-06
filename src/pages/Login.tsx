@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { authService } from "../services/api";
 
 type Alerta = { tipo: "error" | "exito"; texto: string } | null;
 
@@ -35,7 +36,7 @@ export default function Login() {
   const onBlurDni = () => setErrorDni(dni.trim() !== "" && !validarDni(dni.trim()));
   const onBlurPassword = () => setErrorPassword(password !== "" && password.length < 6);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const dniLimpio = dni.trim();
 
@@ -49,21 +50,43 @@ export default function Login() {
       return;
     }
 
-    // Simulación de POST /api/auth/login
     setCargando(true);
     setAlerta(null);
 
-    setTimeout(() => {
-      setCargando(false);
+    try {
+      const data = await authService.login({ dni: dniLimpio, password });
 
-      if (dniLimpio === "12345678" && password === "admin123") {
-        setAlerta({ tipo: "exito", texto: "¡Bienvenido, administrador! Redirigiendo…" });
-        setTimeout(() => navigate("/admin"), 1200);
-      } else {
-        setAlerta({ tipo: "exito", texto: "¡Bienvenido, bailarín! Redirigiendo…" });
-        setTimeout(() => navigate("/"), 1200);
-      }
-    }, 900);
+      authService.guardarSesion(data, recordarme);
+
+      const rol = (
+        data.rol ||
+        data.role ||
+        data.usuario?.rol ||
+        (Array.isArray(data.roles) ? data.roles[0] : "") ||
+        ""
+      ).toUpperCase();
+
+      const esAdmin = rol.includes("ADMIN");
+      const nombreUsuario = data.nombre || data.usuario?.nombre || (esAdmin ? "administrador" : "bailarín");
+
+      setAlerta({
+        tipo: "exito",
+        texto: `¡Bienvenido, ${nombreUsuario}! Redirigiendo…`,
+      });
+
+      setTimeout(() => {
+        navigate(esAdmin ? "/admin" : "/");
+      }, 1000);
+    } catch (err: any) {
+      const mensaje =
+        err?.message ||
+        err?.data?.mensaje ||
+        err?.data?.message ||
+        "No fue posible iniciar sesión. Verifica tu conexión o credenciales.";
+      setAlerta({ tipo: "error", texto: mensaje });
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
