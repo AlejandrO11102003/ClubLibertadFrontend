@@ -461,7 +461,7 @@ function LogroPost() {
       </div>
 
       <p className="px-4 pb-4 text-sm leading-normal">
-        ¡Orgulloso de obtener el 1.º Lugar (Oro) en el Selectivo Lima Norte junto a Camila Vargas!{" "}
+        VAS A CAER LOPEZZZZZZ{" "}
         <Award size={16} className="inline text-accent" /> Gracias a todos los admiradores por su apoyo constante en
         la pista.
       </p>
